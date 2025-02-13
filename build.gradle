@@ -8,12 +8,20 @@ allprojects {
     }
 }
 
+def getVersionName() {
+    def tagName = System.getenv('GITHUB_REF')
+    if (tagName == null || !tagName.startsWith('refs/tags/v')) {
+        return '0.1.0-SNAPSHOT'
+    }
+    return tagName.replace('refs/tags/v', '')
+}
+
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'com.diffplug.spotless'
 
     group = 'io.github.shizuya-aishima'
-    version = '0.1.0'
+    version = getVersionName()
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21
