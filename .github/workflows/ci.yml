@@ -45,14 +45,19 @@ jobs:
       run: ./gradlew jacocoTestReport
       
     - name: Run dependency check
-      env:
-        JAVA_HOME: ${{ env.JAVA_HOME_21_X64 }}
       uses: dependency-check/Dependency-Check_Action@main
+      id: dependency-check
+      env:
+        JAVA_HOME: ${{ env.JAVA_HOME }}
       with:
         project: 'CsvXlator'
         path: '.'
         format: 'HTML'
         out: 'reports'
+        args: >
+          --enableExperimental
+          --failOnCVSS 7
+          --suppression 'dependency-check-suppressions.xml'
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
