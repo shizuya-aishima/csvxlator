@@ -35,4 +35,15 @@ bin/
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Application specific
+output/
+*.csv
+*.xlsx
+*.xls
+
+# Test reports
+**/build/reports/
+**/build/test-results/
+**/build/jacoco/ 
