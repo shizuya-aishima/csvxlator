@@ -1,86 +1,86 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'jacoco'
+	id 'java-library'
+	id 'maven-publish'
+	id 'jacoco'
 }
 
 group = 'io.github.shizuya-aishima'
 version = '0.1.0'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    implementation 'org.apache.poi:poi:5.2.5'
-    implementation 'org.apache.poi:poi-ooxml:5.2.5'
-    implementation 'org.apache.commons:commons-csv:1.10.0'
-    implementation 'org.slf4j:slf4j-api:2.0.9'
-    
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'org.assertj:assertj-core:3.24.2'
-    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
+	implementation 'org.apache.poi:poi:5.2.5'
+	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+	implementation 'org.apache.commons:commons-csv:1.10.0'
+	implementation 'org.slf4j:slf4j-api:2.0.9'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+	testImplementation 'org.assertj:assertj-core:3.24.2'
+	testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    withJavadocJar()
-    withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+	withJavadocJar()
+	withSourcesJar()
 }
 
 test {
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
-    dependsOn test
-    reports {
-        xml.required = true
-        html.required = true
-    }
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/${System.getenv('GITHUB_REPOSITORY') ?: 'shizuya-aishima/csvxlator'}")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-    publications {
-        maven(MavenPublication) {
-            from components.java
-            artifact javadocJar
-            artifact sourcesJar
-            pom {
-                name = 'csvxlator'
-                description = 'CSVファイルをExcelファイルに変換する軽量で柔軟なライブラリ'
-                url = 'https://github.com/shizuya-aishima/csvxlator'
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'https://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'shizuya-aishima'
-                        name = 'Shizuya Aishima'
-                        email = 'shizuya.aishima@example.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/shizuya-aishima/csvxlator.git'
-                    developerConnection = 'scm:git:ssh://github.com/shizuya-aishima/csvxlator.git'
-                    url = 'https://github.com/shizuya-aishima/csvxlator'
-                }
-            }
-        }
-    }
-} 
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/${System.getenv('GITHUB_REPOSITORY') ?: 'shizuya-aishima/csvxlator'}")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
+	publications {
+		maven(MavenPublication) {
+			from components.java
+			artifact javadocJar
+			artifact sourcesJar
+			pom {
+				name = 'csvxlator'
+				description = 'CSVファイルをExcelファイルに変換する軽量で柔軟なライブラリ'
+				url = 'https://github.com/shizuya-aishima/csvxlator'
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://opensource.org/licenses/MIT'
+					}
+				}
+				developers {
+					developer {
+						id = 'shizuya-aishima'
+						name = 'Shizuya Aishima'
+						email = 'shizuya.aishima@example.com'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://github.com/shizuya-aishima/csvxlator.git'
+					developerConnection = 'scm:git:ssh://github.com/shizuya-aishima/csvxlator.git'
+					url = 'https://github.com/shizuya-aishima/csvxlator'
+				}
+			}
+		}
+	}
+}

@@ -1,26 +1,26 @@
 plugins {
-    id 'application'
-    id 'java'
+	id 'application'
+	id 'java'
 }
 
 group = 'io.github.shizuya-aishima'
 version = '0.1.0'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    implementation project(':csvxlator-core')
-    implementation 'org.apache.commons:commons-csv:1.10.0'
-    implementation 'org.slf4j:slf4j-simple:2.0.9'
+	implementation project(':csvxlator-core')
+	implementation 'org.apache.commons:commons-csv:1.10.0'
+	implementation 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 application {
-    mainClass = 'com.example.sample.SampleApp'
+	mainClass = 'com.example.sample.SampleApp'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-} 
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
