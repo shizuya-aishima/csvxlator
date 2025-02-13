@@ -1,0 +1,34 @@
+# 非アクティブな日数
+daysUntilStale: 60
+daysUntilClose: 7
+
+# 除外するラベル
+exemptLabels:
+  - pinned
+  - "help wanted"
+
+# Staleとマークする際のラベル
+staleLabel: stale
+
+# Staleとマークする際のコメント
+markComment: >
+  このIssue/PRは60日間更新がないため、自動的に`stale`とマークされました。
+  7日以内に更新がない場合、自動的にクローズされます。
+  このIssue/PRが依然として重要な場合は、コメントを追加するか、`stale`ラベルを削除してください。
+
+# クローズする際のコメント
+closeComment: >
+  アクティビティがないため、このIssue/PRは自動的にクローズされました。
+  再度開く必要がある場合は、新しいコメントを追加してください。
+
+# Issueに対する設定
+issues:
+  exemptLabels:
+    - bug
+    - enhancement
+
+# PRに対する設定
+pulls:
+  exemptLabels:
+    - work-in-progress
+    - pending-review 

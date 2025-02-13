@@ -2,10 +2,9 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'jacoco'
-    id 'com.diffplug.spotless' version '6.25.0'
 }
 
-group = 'com.example'
+group = 'io.github.shizuya-aishima'
 version = '0.1.0'
 
 repositories {
@@ -17,12 +16,10 @@ dependencies {
     implementation 'org.apache.poi:poi-ooxml:5.2.5'
     implementation 'org.apache.commons:commons-csv:1.10.0'
     implementation 'org.slf4j:slf4j-api:2.0.9'
-    implementation 'org.slf4j:slf4j-simple:2.0.9'
-    implementation 'org.apache.logging.log4j:log4j-core:2.22.1'
     
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testImplementation 'org.assertj:assertj-core:3.24.2'
-    testRuntimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.22.1'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 java {
@@ -30,19 +27,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
     withJavadocJar()
     withSourcesJar()
-}
-
-jar {
-    manifest {
-        attributes(
-            'Implementation-Title': project.name,
-            'Implementation-Version': project.version,
-            'Built-By': System.getProperty('user.name'),
-            'Built-Date': new Date(),
-            'Built-JDK': System.getProperty('java.version')
-        )
-    }
-    archiveClassifier = ''
 }
 
 test {
@@ -62,7 +46,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/${System.getenv('GITHUB_REPOSITORY') ?: 'yourusername/my-library'}")
+            url = uri("https://maven.pkg.github.com/${System.getenv('GITHUB_REPOSITORY') ?: 'shizuya-aishima/csvxlator'}")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
@@ -75,9 +59,9 @@ publishing {
             artifact javadocJar
             artifact sourcesJar
             pom {
-                name = 'My Library'
-                description = 'シンプルなJavaライブラリ'
-                url = 'https://github.com/yourusername/my-library'
+                name = 'csvxlator'
+                description = 'CSVファイルをExcelファイルに変換する軽量で柔軟なライブラリ'
+                url = 'https://github.com/shizuya-aishima/csvxlator'
                 licenses {
                     license {
                         name = 'MIT License'
@@ -86,38 +70,17 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'yourusername'
-                        name = 'Your Name'
-                        email = 'your.email@example.com'
+                        id = 'shizuya-aishima'
+                        name = 'Shizuya Aishima'
+                        email = 'shizuya.aishima@example.com'
                     }
                 }
+                scm {
+                    connection = 'scm:git:git://github.com/shizuya-aishima/csvxlator.git'
+                    developerConnection = 'scm:git:ssh://github.com/shizuya-aishima/csvxlator.git'
+                    url = 'https://github.com/shizuya-aishima/csvxlator'
+                }
             }
-        }
-    }
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
-subprojects {
-    group = 'com.example'
-    version = '0.1.0'
-
-    apply plugin: 'com.diffplug.spotless'
-
-    spotless {
-        java {
-            importOrder()
-            removeUnusedImports()
-            googleJavaFormat()
-            formatAnnotations()
-        }
-        groovyGradle {
-            target '*.gradle'
-            greclipse()
         }
     }
 } 
