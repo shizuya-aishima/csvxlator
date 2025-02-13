@@ -45,7 +45,7 @@ jobs:
       run: ./gradlew jacocoTestReport
       
     - name: Run dependency check
-      uses: dependency-check/Dependency-Check_Action@v3.0.6
+      uses: dependency-check/Dependency-Check_Action@main
       with:
         project: 'CsvXlator'
         path: '.'
