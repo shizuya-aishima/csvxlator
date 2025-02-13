@@ -69,8 +69,6 @@ publishing {
 	publications {
 		maven(MavenPublication) {
 			from components.java
-			artifact javadocJar
-			artifact sourcesJar
 			pom {
 				name = 'csvxlator'
 				description = 'CSVファイルをExcelファイルに変換する軽量で柔軟なライブラリ'
