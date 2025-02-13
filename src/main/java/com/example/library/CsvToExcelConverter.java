@@ -13,6 +13,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * CSVファイルをExcelファイルに変換するユーティリティクラスです。
+ * このクラスは、Apache Commons CSVとApache POIを使用してCSVからExcel形式への変換を行います。
+ * 変換時にはヘッダー行のスタイリングやカラム幅の自動調整などの基本的な書式設定も行います。
+ */
 public class CsvToExcelConverter {
     private static final Logger logger = LoggerFactory.getLogger(CsvToExcelConverter.class);
 
