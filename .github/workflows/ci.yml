@@ -28,9 +28,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        gradle-home-cache-cleanup: true
+      uses: gradle/actions/setup-gradle@v3
     
     - name: Check code format
       run: ./gradlew spotlessCheck
@@ -102,9 +100,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        gradle-home-cache-cleanup: true
+      uses: gradle/actions/setup-gradle@v3
         
     - name: Publish package
       run: ./gradlew publish
