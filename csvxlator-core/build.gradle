@@ -31,7 +31,6 @@ java {
 
 test {
 	useJUnitPlatform()
-	finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
