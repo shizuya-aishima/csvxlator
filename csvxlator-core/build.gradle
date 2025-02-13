@@ -16,10 +16,11 @@ dependencies {
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'
 	implementation 'org.apache.commons:commons-csv:1.10.0'
 	implementation 'org.slf4j:slf4j-api:2.0.9'
+	implementation 'org.slf4j:slf4j-simple:2.0.9'
 
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+	testImplementation platform('org.junit:junit-bom:5.10.1')
+	testImplementation 'org.junit.jupiter:junit-jupiter'
 	testImplementation 'org.assertj:assertj-core:3.24.2'
-	testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 java {
@@ -29,8 +30,21 @@ java {
 	withSourcesJar()
 }
 
+tasks.named('jar') {
+	manifest {
+		attributes(
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version,
+			'Built-By': System.getProperty('user.name'),
+			'Built-Date': new Date(),
+			'Built-JDK': System.getProperty('java.version')
+		)
+	}
+}
+
 test {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
