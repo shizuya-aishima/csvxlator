@@ -9,11 +9,11 @@ allprojects {
 }
 
 subprojects {
-    group = 'io.github.shizuya-aishima'
-    version = '0.1.0'
-
     apply plugin: 'java-library'
     apply plugin: 'com.diffplug.spotless'
+
+    group = 'io.github.shizuya-aishima'
+    version = '0.1.0'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21

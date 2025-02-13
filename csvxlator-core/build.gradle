@@ -70,7 +70,7 @@ publishing {
 		maven(MavenPublication) {
 			from components.java
 			pom {
-				name = 'csvxlator'
+				name = 'csvxlator-core'
 				description = 'CSVファイルをExcelファイルに変換する軽量で柔軟なライブラリ'
 				url = 'https://github.com/shizuya-aishima/csvxlator'
 				licenses {
