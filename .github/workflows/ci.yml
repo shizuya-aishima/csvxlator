@@ -55,13 +55,13 @@ jobs:
         format: 'HTML'
         
     - name: Upload dependency check report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dependency-check-report
         path: reports
         
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: library-artifacts
         path: |
@@ -71,7 +71,7 @@ jobs:
       
     - name: Upload test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: csvxlator-core/build/reports/tests/
@@ -79,7 +79,7 @@ jobs:
         
     - name: Upload coverage reports
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-reports
         path: csvxlator-core/build/reports/jacoco/
