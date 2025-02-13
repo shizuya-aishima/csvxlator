@@ -10,6 +10,8 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
   packages: write
   security-events: write
 
@@ -26,7 +28,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         gradle-version: 8.12.1
     
@@ -42,26 +44,30 @@ jobs:
     - name: Generate coverage report
       run: ./gradlew jacocoTestReport
       
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./csvxlator-core/build/reports/jacoco/test/jacocoTestReport.xml
-        
     - name: Run dependency check
-      uses: dependency-check/Dependency-Check_Action@main
+      uses: dependency-check/Dependency-Check_Action@v3.1.6
       with:
         project: 'CsvXlator'
         path: '.'
         format: 'HTML'
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'csvxlator-core/build/reports'
         
     - name: Upload dependency check report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dependency-check-report
         path: reports
+        retention-days: 90
         
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: library-artifacts
         path: |
@@ -71,7 +77,7 @@ jobs:
       
     - name: Upload test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: csvxlator-core/build/reports/tests/
@@ -79,11 +85,22 @@ jobs:
         
     - name: Upload coverage reports
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-reports
         path: csvxlator-core/build/reports/jacoco/
         retention-days: 90
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
         
   publish:
     needs: build
@@ -99,7 +116,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         gradle-version: 8.12.1
         
