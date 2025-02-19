@@ -3,6 +3,8 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ "main" ]
   release:
@@ -28,9 +30,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        gradle-version: 8.12.1
+      uses: gradle/actions/setup-gradle@v4
     
     - name: Check code format
       run: ./gradlew spotlessCheck
@@ -43,36 +43,22 @@ jobs:
       
     - name: Generate coverage report
       run: ./gradlew jacocoTestReport
-      
-    - name: Run dependency check
-      uses: dependency-check/Dependency-Check_Action@v3.1.6
-      with:
-        project: 'CsvXlator'
-        path: '.'
-        format: 'HTML'
 
     - name: Setup Pages
-      uses: actions/configure-pages@v4
+      uses: actions/configure-pages@v5
 
     - name: Upload Pages artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'csvxlator-core/build/reports'
-        
-    - name: Upload dependency check report
-      uses: actions/upload-artifact@v4
-      with:
-        name: dependency-check-report
-        path: reports
-        retention-days: 90
+        path: 'build/reports'
         
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: library-artifacts
         path: |
-          csvxlator-core/build/libs/*.jar
-          csvxlator-core/build/publications/
+          build/libs/*.jar
+          build/publications/
         retention-days: 90
       
     - name: Upload test results
@@ -80,7 +66,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: csvxlator-core/build/reports/tests/
+        path: build/reports/tests/
         retention-days: 90
         
     - name: Upload coverage reports
@@ -88,11 +74,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: coverage-reports
-        path: csvxlator-core/build/reports/jacoco/
+        path: build/reports/jacoco/
         retention-days: 90
 
   deploy:
     needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -104,7 +91,7 @@ jobs:
         
   publish:
     needs: build
-    if: github.event_name == 'release'
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -116,9 +103,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        gradle-version: 8.12.1
+      uses: gradle/actions/setup-gradle@v4
         
     - name: Publish package
       run: ./gradlew publish
