@@ -40,12 +40,31 @@ version-resolver:
       - 'bugfix'
       - 'bug'
       - 'maintenance'
+      - 'dependencies'
   default: patch
 
 template: |
-  ## 変更点
+  ## 変更点 🚀
 
   $CHANGES
+
+  ## インストール方法 📦
+
+  ### Gradle
+  ```groovy
+  dependencies {
+      implementation 'io.github.shizuya-aishima:csvxlator-core:$RESOLVED_VERSION'
+  }
+  ```
+
+  ### Maven
+  ```xml
+  <dependency>
+      <groupId>io.github.shizuya-aishima</groupId>
+      <artifactId>csvxlator-core</artifactId>
+      <version>$RESOLVED_VERSION</version>
+  </dependency>
+  ```
 
   ## 👩‍💻 コントリビューター
 

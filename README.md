@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.shizuya-aishima:csvxlator:0.1.0'
+    implementation 'io.github.shizuya-aishima:csvxlator-core:0.1.0'
 }
 ```
 
@@ -55,7 +55,7 @@ dependencies {
 <dependencies>
     <dependency>
         <groupId>io.github.shizuya-aishima</groupId>
-        <artifactId>csvxlator</artifactId>
+        <artifactId>csvxlator-core</artifactId>
         <version>0.1.0</version>
     </dependency>
 </dependencies>
